@@ -1,10 +1,7 @@
-# This is a sample Python script.
 import sys
 import ast
 import operator
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 LINE_TYPE = tuple[tuple[int, int], tuple[int, int]]
 BOARD_DIMENSION_TYPE = tuple[tuple[int, int], tuple[int, int]]
@@ -236,12 +233,6 @@ def place_lines_and_check_hv(dim: BOARD_DIMENSION_TYPE, v_lines: list[LINE_TYPE]
     return grand_total
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     data_ = sys.stdin.read()
 
@@ -258,5 +249,3 @@ if __name__ == '__main__':
     total = place_lines_and_check_hv(board_dimensions, filtered_lines_h, filtered_lines_v)
 
     print(f"{total=}")
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
