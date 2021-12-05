@@ -90,7 +90,12 @@ def board_dimension(lines: list[LINE_TYPE]) -> BOARD_DIMENSION_TYPE:
     return (x_min, y_min), (x_max, y_max)
 
 
-def place_lines_and_check_hv(dim: BOARD_DIMENSION_TYPE, v_lines: list[LINE_TYPE], h_lines: list[LINE_TYPE]):
+def place_lines_and_check_hv45(
+        dim: BOARD_DIMENSION_TYPE,
+        v_lines: list[LINE_TYPE],
+        h_lines: list[LINE_TYPE],
+        deg45_lines: list[LINE_TYPE]
+):
     grand_total: int = 0
     board: list
 
@@ -151,6 +156,28 @@ def place_lines_and_check_hv(dim: BOARD_DIMENSION_TYPE, v_lines: list[LINE_TYPE]
             if current == end:
                 break
             current = tuple(map(operator.add, current, advance))
+
+    for deg45_line in deg45_lines:
+        advance: tuple[int, int]
+        increment = tuple(map(operator.sub, deg45_line[1], deg45_line[0]))
+        advance = (int(increment[0] / abs(increment[0])), int(increment[1] / abs(increment[1])))
+
+        start = tuple(map(operator.sub, deg45_line[0], dim[0]))
+        end = tuple(map(operator.sub, deg45_line[1], dim[0]))
+
+        current = start
+        if DEBUG:
+            print(f"{deg45_line[0]=}{deg45_line[1]=}")
+            print(f"{start=},{end=},{advance=}", flush=True)
+        while True:
+            if DEBUG:
+                print(f"{current=}", flush=True)
+            board[current[0]][current[1]] += 1
+            if board[current[0]][current[1]] == 2:
+                grand_total += 1
+            if current == end:
+                break
+            current = tuple(map(operator.add, current, advance))
     if DEBUG:
         print(board)
         print(f"{grand_total=}")
@@ -160,15 +187,15 @@ def place_lines_and_check_hv(dim: BOARD_DIMENSION_TYPE, v_lines: list[LINE_TYPE]
 if __name__ == '__main__':
     data_ = sys.stdin.read()
 
-    filtered_lines_h: list[LINE_TYPE]
-    filtered_lines_v: list[LINE_TYPE]
-    filtered_lines_45:list[LINE_TYPE]
+    filtered_lines_h:  list[LINE_TYPE]
+    filtered_lines_v:  list[LINE_TYPE]
+    filtered_lines_45: list[LINE_TYPE]
     board_dimensions: BOARD_DIMENSION_TYPE
 
     filtered_lines_h, filtered_lines_v, filtered_lines_45 = filter_lines_hv45(data_)
 
     board_dimensions = board_dimension(filtered_lines_h + filtered_lines_v + filtered_lines_45)
-    raise NotImplementedError
-    total = place_lines_and_check_hv(board_dimensions, filtered_lines_h, filtered_lines_v)
+
+    total = place_lines_and_check_hv45(board_dimensions, filtered_lines_h, filtered_lines_v, filtered_lines_45)
 
     print(f"{total=}")
