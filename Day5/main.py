@@ -62,17 +62,19 @@ def filter_lines(line_txt: str) -> list[LINE_TYPE]:
     return filtered_list
 
 
-def filter_lines_hv(line_txt: str) -> tuple[list[LINE_TYPE], list[LINE_TYPE]]:
+def filter_lines_hv45(line_txt: str) -> tuple[list[LINE_TYPE], list[LINE_TYPE], list[LINE_TYPE]]:
     line_txt_list = line_txt.split("\n")
 
     invalid_lines = 0
     # dot_count = 0  # probably should be counted
     horizontal_count = 0
     vertical_count = 0
-    slanted_count = 0  # will be ignored
+    slanted45_count = 0
+    slanted_odd_count = 0  # will be ignored
 
     filtered_list_h = []
     filtered_list_v = []
+    filtered_list_45 = []
     # Dots will be counted as horizontal.
     # Does not violate the logic here.
 
@@ -104,12 +106,18 @@ def filter_lines_hv(line_txt: str) -> tuple[list[LINE_TYPE], list[LINE_TYPE]]:
             filtered_list_v.append(coord_tuple)
             continue
 
-        slanted_count = slanted_count + 1
+        subtract_coord = tuple(map(operator.sub, coord1, coord2))
+        if abs(subtract_coord[0]) == abs(subtract_coord[1]):
+            slanted45_count += 1
+            filtered_list_45.append(coord_tuple)
+            continue
+
+        slanted_odd_count = slanted_odd_count + 1
         # filtered_list.pop()
 
-    print(f"{invalid_lines=}, {vertical_count=}, {horizontal_count=}, {slanted_count=}")
+    print(f"{invalid_lines=}, {vertical_count=}, {horizontal_count=}, {slanted45_count=}, {slanted_odd_count=}")
 
-    return filtered_list_h, filtered_list_v
+    return filtered_list_h, filtered_list_v, filtered_list_45
 
 
 def board_dimension(lines: list[LINE_TYPE]) -> BOARD_DIMENSION_TYPE:
@@ -239,11 +247,13 @@ if __name__ == '__main__':
     # filtered_lines: list[LINE_TYPE]
     filtered_lines_h: list[LINE_TYPE]
     filtered_lines_v: list[LINE_TYPE]
+    filtered_lines_45:list[LINE_TYPE]
     board_dimensions: BOARD_DIMENSION_TYPE
 
     # filtered_lines = filter_lines(data_)
-    filtered_lines_h, filtered_lines_v = filter_lines_hv(data_)
+    filtered_lines_h, filtered_lines_v, filtered_lines_45 = filter_lines_hv45(data_)
     # board_dimensions = board_dimension(filtered_lines)
+    raise NotImplementedError
     board_dimensions = board_dimension(filtered_lines_h + filtered_lines_v)
 
     total = place_lines_and_check_hv(board_dimensions, filtered_lines_h, filtered_lines_v)
