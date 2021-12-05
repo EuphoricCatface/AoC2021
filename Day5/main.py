@@ -166,9 +166,9 @@ if __name__ == '__main__':
     board_dimensions: BOARD_DIMENSION_TYPE
 
     filtered_lines_h, filtered_lines_v, filtered_lines_45 = filter_lines_hv45(data_)
-    raise NotImplementedError
-    board_dimensions = board_dimension(filtered_lines_h + filtered_lines_v)
 
+    board_dimensions = board_dimension(filtered_lines_h + filtered_lines_v + filtered_lines_45)
+    raise NotImplementedError
     total = place_lines_and_check_hv(board_dimensions, filtered_lines_h, filtered_lines_v)
 
     print(f"{total=}")
