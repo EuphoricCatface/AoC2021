@@ -2,8 +2,9 @@ import sys
 
 
 def main():
+    aim = 0
     forward = 0
-    down = 0
+    depth = 0
 
     puzzle_input = sys.stdin.read()
 
@@ -17,15 +18,16 @@ def main():
 
         if cmd == "forward":
             forward += amount
-        elif cmd == "backward":
-            forward -= amount
+            depth += aim * amount
+        # elif cmd == "backward":
+        #     forward -= amount
 
         elif cmd == "up":
-            down -= amount
+            aim -= amount
         elif cmd == "down":
-            down += amount
+            aim += amount
 
-    print(forward * down)
+    print(forward * depth)
 
 
 if __name__ == "__main__":
