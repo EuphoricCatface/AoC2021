@@ -20,7 +20,10 @@ def main():
         count_array = list(map(operator.add, count_array, line_array))
         input_length += 1
 
+    if input_length / 2 == 1:
+        print("Warning: input_length is even")
     count_array.reverse()
+
     for i, count in enumerate(count_array):
         if count > (input_length / 2):
             gamma_rate += 2 ** i
