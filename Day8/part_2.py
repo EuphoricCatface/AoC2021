@@ -50,13 +50,15 @@ def deduction(line: str):
         elif length == 4:
             result[i] = 4
         elif length == 5:
-            unsolved_5count.append(set(symbol))
+            # unsolved_5count.append(set(symbol))
+            pass
         elif length == 6:
-            unsolved_6count.append(set(symbol))
+            # unsolved_6count.append(set(symbol))
+            pass
         elif length == 7:
             result[i] = 8
 
-    if (not unsolved_5count) and (not unsolved_6count):
+    if (not unsolved_5count) and (not unsolved_6count) and 0:
         value = 0
         for i in result:
             value *= 10
@@ -77,8 +79,10 @@ def deduction(line: str):
         elif length == 4:
             int_to_signal[4] = symbol
         elif length == 5:
+            unsolved_5count.append(set(symbol))
             every_5count.append(symbol)
         elif length == 6:
+            unsolved_6count.append(set(symbol))
             every_6count.append(symbol)
         elif length == 7:
             int_to_signal[8] = symbol
