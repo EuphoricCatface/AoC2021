@@ -152,7 +152,7 @@ def deduction(line: str):
     for i, signal in enumerate(numbers_signal_list):
         result[i] = int_to_signal.index(set(signal))
 
-    if DEBUG == 1:
+    if DEBUG == 1 and 0:
         print(f"{int_to_signal}")
 
     value = 0
@@ -170,8 +170,10 @@ def main():
     summation = 0
     for line in input_str.split("\n"):
         result = deduction(line)
-        if DEBUG == 1:
+        if DEBUG == 1 and 0:
             print(f"{result}, {line}")
+        if DEBUG == 1:
+            print(f"{result}")
         summation += result
 
     print(f"{summation=}")
